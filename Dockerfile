@@ -45,6 +45,8 @@ RUN wget -q https://repo.continuum.io/miniconda/Miniconda3-4.5.1-Linux-x86_64.sh
     rm /tmp/miniconda.sh
 ENV PATH=/opt/conda/bin:$PATH
 
+RUN chown -R 777 /opt/conda/
+
 ADD . /src/jupyterhub
 WORKDIR /src/jupyterhub
 
@@ -53,6 +55,10 @@ RUN pip install . && \
 
 RUN mkdir -p /srv/jupyterhub/
 WORKDIR /srv/jupyterhub/
+
+RUN conda install notebook &&/
+    conda install lab
+
 EXPOSE 8000
 
 LABEL org.jupyter.service="jupyterhub"
